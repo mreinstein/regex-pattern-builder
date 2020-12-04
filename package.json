@@ -1,0 +1,29 @@
+{
+  "name": "regex-pattern-builder",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "generate a regex from an input sample string set using machine learning",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node -r dotenv/config index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mreinstein/regex-pattern-builder.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mreinstein/regex-pattern-builder/issues"
+  },
+  "homepage": "https://github.com/mreinstein/regex-pattern-builder#readme",
+  "dependencies": {
+    "@koa/cors": "^3.1.0",
+    "dotenv": "^8.2.0",
+    "koa": "^2.13.0",
+    "koa-parse-json": "^1.0.1"
+  }
+}

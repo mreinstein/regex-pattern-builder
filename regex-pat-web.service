@@ -1,0 +1,19 @@
+[Unit]
+Description=regex pattern builder web service
+After=syslog.target network.target
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/regex-pattern-builder
+ExecStart=/usr/bin/npm start
+Environment="NODE_ENV=production"
+Restart=on-failure
+KillSignal=SIGINT
+SyslogIdentifier=regpatbuild
+#StandardOutput=syslog
+
+[Install]
+WantedBy=multi-user.target
+
