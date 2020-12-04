@@ -1,10 +1,11 @@
 // frontend for the regex builder running at http://regex.inginf.units.it/extract/
 
-import cors from '@koa/cors';
-import fs   from 'fs';
-import os   from 'os';
-import body from 'koa-parse-json';
-import Koa  from 'koa';
+import cors  from '@koa/cors';
+import fs    from 'fs';
+import https from 'https';
+import os    from 'os';
+import body  from 'koa-parse-json';
+import Koa   from 'koa';
 import { fileURLToPath } from 'url';
 import { dirname, sep }  from 'path';
 import { spawn }         from 'child_process';
@@ -66,9 +67,18 @@ app.use(async (ctx, next) => {
     }
 });
 
+//const HOST = '0.0.0.0';
 const PORT = 5001;
-app.listen(PORT);
-console.log(`regex build server listening on port ${PORT}`);
+//app.listen(PORT);
+
+const options = {
+    key: fs.readFileSync('server.key'),
+    cert: fs.readFileSync('server.crt')
+};
+
+const httpsServer = https.createServer(options, app.callback()).listen(PORT);
+
+console.log(`regex build server listening via https on port ${PORT}`);
 
 
 // @param Array samples a series of strings and their matches.
