@@ -66,7 +66,7 @@ app.use(async (ctx, next) => {
     }
 });
 
-const PORT = 6000;
+const PORT = 5001;
 app.listen(PORT);
 console.log(`regex build server listening on port ${PORT}`);
 
