@@ -62,7 +62,10 @@ app.use(async (ctx, next) => {
             const result = await determineRegex(samples);
             ctx.response.body = { status: 'OK', result };
         } catch (er) {
-            ctx.response.body = { status: 'FAILED', result: er };
+            if (er.message === 'Match Failure')
+                ctx.response.body = { status: 'FAILED', result: 'INSUFFICIENT_SAMPLES' };
+            else
+                 ctx.response.body = { status: 'FAILED', result: er.message };
         }
     }
 });
@@ -117,18 +120,25 @@ async function determineRegex (samples) {
 
             console.log('raw:', raw);
 
-            try {
-                const j = JSON.parse(raw);
+            const j = JSON.parse(raw);
 
-                // need to convert slashes (\) to double slashes (\\)
-                // because json will escape strings
-                resolve({
-                    solutionJS: j.bestSolution.solutionJS.replace(/\\/g, '\\\\\\\\')
-                });
 
-            } catch (er) {
-                reject('failed to parse result as JSON');
+            // validate that the resulting regex successfully matches all of the input samples.
+            // on failure, indicate as such.
+            const pattern = new RegExp(j.bestSolution.solutionJS);
+            for (const s of samples) {
+                const expectedResult = s.string.substring(s.match[0].start, s.match[0].end);
+                const matches = s.string.match(pattern);
+                if (!matches || matches[0] !== expectedResult)
+                    return reject(new Error('Match Failure'));
             }
+
+            // need to convert slashes (\) to double slashes (\\)
+            // because json will escape strings
+            resolve({
+                solutionJS: j.bestSolution.solutionJS.replace(/\\/g, '\\\\\\\\')
+            });
+
         });
     });
 }
