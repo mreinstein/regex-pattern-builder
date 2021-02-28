@@ -33,7 +33,7 @@ app.use(cors());
 app.use(body());
 
 app.use(async (ctx, next) => {
-    if (ctx.url === '/' && ctx.method === 'POST') {
+    if (ctx.url === '/regex' && ctx.method === 'POST') {
 
         ctx.response.type = 'application/json';
         
@@ -65,23 +65,16 @@ app.use(async (ctx, next) => {
             if (er.message === 'Match Failure')
                 ctx.response.body = { status: 'FAILED', result: 'INSUFFICIENT_SAMPLES' };
             else
-                 ctx.response.body = { status: 'FAILED', result: er.message };
+                ctx.response.body = { status: 'FAILED', result: er.message };
         }
     }
 });
 
 //const HOST = '0.0.0.0';
 const PORT = 5001;
-//app.listen(PORT);
+app.listen(PORT);
 
-const options = {
-    key: fs.readFileSync('server.key'),
-    cert: fs.readFileSync('server.crt')
-};
-
-const httpsServer = https.createServer(options, app.callback()).listen(PORT);
-
-console.log(`regex build server listening via https on port ${PORT}`);
+console.log(`regex build server listening via http on port ${PORT}`);
 
 
 // @param Array samples a series of strings and their matches.
