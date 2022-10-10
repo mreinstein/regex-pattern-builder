@@ -9,6 +9,8 @@ Writing rules to extract parts of a URL is hard. It should be, like...super easy
 
 This is a UI prototype that explores making this process more human friendly:
 
+![alt text](fig1.png "screenshot")
+
 
 ## TODO
 * generate json rules compatible with the existing API
