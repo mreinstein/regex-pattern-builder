@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    
+    <title>Extract a string pattern from a URL</title>
+
+    <style>
+        body {
+            font-family: system-ui;
+        }
+    </style>
+
+    <script type="module">
+        import html           from 'https://cdn.skypack.dev/snabby'
+        import patternBuilder from './url-pattern-builder.js'
+
+
+        let currentVnode = document.querySelector('main')
+        const model = patternBuilder.init({
+            urls: [
+                {
+                    string: 'https://www.albertsons.com/1234/product-details.960327053.html',
+                    selectionStart: 48,
+                    selectionEnd: 56
+                },
+                {
+                    string: 'https://www.albertsons.com/shop/product-details.148020226.html',
+                    selectionStart: 48,
+                    selectionEnd: 56
+                },
+                {
+                    string: 'https://www.albertsons.com/shop/aisles/beverages/water-sparkling-water.177.html?sort=&page=1',
+                    selectionStart: 71,
+                    selectionEnd: 73
+                },
+            ]
+        })
+
+        function update () {
+            const oldVnode = currentVnode
+            const newVnode = patternBuilder.view(model, update)
+            currentVnode = html.update(oldVnode, newVnode)
+        }
+
+        update()
+
+    </script>
+</head>
+<body>
+
+    <main></main>
+
+</body>
+</html>

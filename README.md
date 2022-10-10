@@ -1,37 +1,14 @@
-# regex-pattern-builder
-generate a regex from an input sample string set using machine learning
+## Regex Pattern Builer
+
+Writing rules to extract parts of a URL is hard. It should be, like...super easy, and stuff.
+
+This is a UI prototype that explores making this process more human friendly:
 
 
-This is a simple node frontend that exposes a web api for the fantastic RegexGenerator project found here: https://github.com/MaLeLabTs/RegexGenerator
-
-
-# setup
-
-Note: you need to run this on a machine with node 14.x and java jre available on the path.
-
-```bash
-sudo apt install default-jre
-
-npm install --production
-
-sudo cp regex-pat-web.service /lib/systemd/system/
-sudo chmod 664 /lib/systemd/system/regex-pat-web.service
-sudo systemctl daemon-reload
-sudo systemctl enable regex-pat-web.service
-```
-
-
-If you're using nginx as a reverse proxy, add this to your nginx config:
-
-```nginx
-location /regex {
-	proxy_pass http://127.0.0.1:5001;
-	proxy_http_version 1.1;
-	proxy_set_header X-Forwarded-Proto https;
-	proxy_set_header Upgrade $http_upgrade;
-	proxy_set_header Connection 'upgrade';
-	proxy_set_header Host $host;
-	proxy_cache_bypass $http_upgrade;
-    proxy_read_timeout 300;
-}
-```
+## TODO
+* generate json rules compatible with the existing API
+* determine if there are good “boundary” characters before/after selected regions to improve regex pattern
+* run against all existing unit test data (top 10 sites) to validate it works
+* propose an extension to the pageid template json to include a regexp rule type
+* bugfix: cannot select a single character in the URL string (2 char minimum)
+* bugfix: when URL strings linewrap the selection handles go a bit ... "wonky"
