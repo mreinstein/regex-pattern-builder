@@ -1,3 +1,8 @@
+This branch differs from `main` in that it provides a "pure" js solution that doesn't call out to an external service.
+
+Also provides a UI for url pattern building.
+
+
 ## Regex Pattern Builer
 
 Writing rules to extract parts of a URL is hard. It should be, like...super easy, and stuff.
